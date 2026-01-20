@@ -15,7 +15,7 @@ body{
   margin: auto;
 }
 
-/* -----------------------NAVBAR---------------------*/
+/*? -----------------------NAVBAR---------------------*/
 header{
   background: #fff;
   padding: 20px 0;
@@ -36,7 +36,6 @@ header{
   color: #d70000;
 }
 
-/*--------------------------------------MENU--------------------- */
 .nav-links{
   list-style: none;
   display: flex;
@@ -48,12 +47,36 @@ header{
   color: #333;
   font-size: 16px;
   transition: .3s;
+  position: relative;
 }
 
-.nav-links .active{
-  color: #d70000;
-  font-weight: 500;
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  width: 0%;
+  height: 1.5px;
+  background-color: #ce1212; 
+  transition:  0.3s ease-out;
 }
+.nav-links a:hover {
+  color: rgb(96, 97, 104);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a.active {
+  color: rgb(96, 97, 104);
+}
+
+.nav-links a.active::after {
+  width: 100%;
+}
+
+/*?--------------------------------------MENU--------------------- */
 
 .book-btn{
   background: #d70000;
@@ -68,7 +91,19 @@ header{
   opacity: .8;
 }
 
-/* -----------------------------HERO SECTION-------------------*/
+.hero-img{
+    animation:hrkeha 2s infinite  ease-in-out alternate ;
+}
+@keyframes hrkeha{
+    0%{
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+
+/*? -----------------------------HERO SECTION-------------------*/
 .hero{
   display: flex;
   align-items: center;
@@ -111,37 +146,119 @@ header{
 }
 
 
-/* ===== About Section Styles ===== */
-.about-section {
+.about {
   padding: 80px 0;
-  background: #f8f9fa;
+  width: 100%;
 }
 
-.about-heading {
-  font-size: 2.5rem;
+.about-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.about-title span {
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #888;
+}
+
+.about-title h2 {
+  font-family: 'Amatic SC', cursive;
+  font-size: 48px;
   font-weight: 700;
-  margin-bottom: 1rem;
 }
 
-.about-text p {
-  font-size: 1rem;
-  line-height: 1.7;
-  margin-bottom: 0.75rem;
+.about-title h2 span {
+  color: #d70000;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  gap: 40px;
+}
+
+.about-left {
+  flex: 1;
+  position: relative;
+}
+
+.about-left img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.about-book {
+  border: 2px solid #333;
+  text-align: center;
+  padding: 18px;
+  margin-top: 20px;
+}
+
+.about-book h3 {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.about-book p {
+  color: #d70000;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.about-right {
+  flex: 1;
+}
+
+.top-text {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.about-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 15px 0;
 }
 
 .about-list li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 10px;
+  padding-left: 26px;
+  position: relative;
 }
 
-.btn-learn {
-  background-color: #ff6f61;
-  border: none;
-  color: white;
-  padding: 0.6rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 0.3rem;
+.about-list li::before {
+  content: "✔";
+  color: #d70000;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
-.btn-learn:hover {
-  background-color: #e65550;
+.about-video {
+  margin-top: 20px;
+  position: relative;
+  width: 100%;
 }
+
+.about-video img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  background: #d70000;
+  color: #fff;
+  border-radius: 50%;
+  padding: 12px 16px;
+  cursor: pointer;
+}
+
+
