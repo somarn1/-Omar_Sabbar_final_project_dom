@@ -27,102 +27,103 @@ showItems('starters');
 // ------------------------------------
 
 
-
 class UniversalCarousel {
-    constructor(element) {
-        this.carousel = element;
-        this.track = element.querySelector('.carousel-track');
-        this.slides = element.querySelectorAll('.carousel-slide');
-        this.slidesToShow = parseInt(element.dataset.bsSlides) || 1;
-        this.autoplaySpeed = parseInt(element.dataset.bsAutoplay) || 4000;
-        this.currentIndex = 0;
-        this.autoplayInterval = null;
+  constructor(element) {
+    this.carousel = element;
+    this.track = element.querySelector('.carousel-track');
+    this.slides = element.querySelectorAll('.carousel-slide');
 
-        this.init();
+    this.slidesToShow = parseInt(element.dataset.bsSlides) || 3;
+    this.autoplaySpeed = parseInt(element.dataset.bsAutoplay) || 4000;
+
+    this.currentIndex = 0;
+    this.autoplayInterval = null;
+    this.dots = [];
+
+    this.init();
+  }
+
+  init() {
+    this.createDots();
+    this.goToSlide(0);
+    this.startAutoplay();
+    this.addEventListeners();
+  }
+
+  createDots() {
+    const oldDots = this.carousel.querySelector('.carousel-dots');
+    if (oldDots) oldDots.remove();
+
+    const dotsContainer = document.createElement('div');
+    dotsContainer.className = 'carousel-dots';
+
+    const totalDots = Math.ceil(this.slides.length / this.slidesToShow);
+
+    for (let i = 0; i < totalDots; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot';
+      if (i === 0) dot.classList.add('active');
+
+      dot.addEventListener('click', () => this.goToSlide(i));
+      dotsContainer.appendChild(dot);
     }
 
-    init() {
-        this.createDots();
-        this.updateSlidesToShow();
-        this.startAutoplay();
-        this.addEventListeners();
-    }
+    this.carousel.appendChild(dotsContainer);
+    this.dots = dotsContainer.querySelectorAll('.carousel-dot');
+  }
 
-    updateSlidesToShow() {
-        if (window.innerWidth <= 768) {
-            this.slidesToShow = 1;
-        } else if (window.innerWidth <= 1024 && this.slidesToShow > 2) {
-            this.slidesToShow = 2;
-        }
-    }
+  updateDots() {
+    this.dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === this.currentIndex);
+    });
+  }
 
-    createDots() {
-        const dotsContainer = document.createElement('div');
-        dotsContainer.className = 'carousel-dots';
+  goToSlide(index) {
+    this.currentIndex = index;
 
-        const totalDots = Math.ceil(this.slides.length / this.slidesToShow);
+    const slideWidth = 100 / this.slidesToShow;
+    this.track.style.transform = `translateX(-${this.currentIndex * slideWidth}%)`;
 
-        for (let i = 0; i < totalDots; i++) {
-            const dot = document.createElement('button');
-            dot.className = 'carousel-dot';
-            if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => this.goToSlide(i));
-            dotsContainer.appendChild(dot);
-        }
+    this.updateDots();
+    this.resetAutoplay();
+  }
 
-        this.carousel.appendChild(dotsContainer);
-        this.dots = dotsContainer.querySelectorAll('.carousel-dot');
-    }
+  nextSlide() {
+    const totalDots = Math.ceil(this.slides.length / this.slidesToShow);
+    this.currentIndex = (this.currentIndex + 1) % totalDots;
+    this.goToSlide(this.currentIndex);
+  }
 
-    updateDots() {
-        this.dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === this.currentIndex);
-        });
-    }
+  startAutoplay() {
+    this.autoplayInterval = setInterval(
+      () => this.nextSlide(),
+      this.autoplaySpeed
+    );
+  }
 
-    goToSlide(index) {
-        this.currentIndex = index;
-        const slideWidth = 100 / this.slidesToShow;
-        this.track.style.transform = `translateX(-${this.currentIndex * slideWidth}%)`;
-        this.updateDots();
-        this.resetAutoplay();
-    }
+  resetAutoplay() {
+    clearInterval(this.autoplayInterval);
+    this.startAutoplay();
+  }
 
-    nextSlide() {
-        const totalDots = Math.ceil(this.slides.length / this.slidesToShow);
-        this.currentIndex = (this.currentIndex + 1) % totalDots;
-        this.goToSlide(this.currentIndex);
-    }
+  addEventListeners() {
+    this.carousel.addEventListener('mouseenter', () => {
+      clearInterval(this.autoplayInterval);
+    });
 
-    startAutoplay() {
-        this.autoplayInterval = setInterval(() => this.nextSlide(), this.autoplaySpeed);
-    }
-
-    resetAutoplay() {
-        clearInterval(this.autoplayInterval);
-        this.startAutoplay();
-    }
-
-    addEventListeners() {
-        this.carousel.addEventListener('mouseenter', () => {
-            clearInterval(this.autoplayInterval);
-        });
-
-        this.carousel.addEventListener('mouseleave', () => {
-            this.startAutoplay();
-        });
-
-        window.addEventListener('resize', () => {
-            this.updateSlidesToShow();
-        });
-    }
+    this.carousel.addEventListener('mouseleave', () => {
+      this.startAutoplay();
+    });
+  }
 }
 
-// Initialize all carousels on page
+
 document.addEventListener('DOMContentLoaded', () => {
-    let carousels = document.querySelectorAll('.universal-carousel');
-    carousels.forEach(carousel => new UniversalCarousel(carousel));
+  document
+    .querySelectorAll('.universal-carousel')
+    .forEach(carousel => new UniversalCarousel(carousel));
 });
+
 
 
 
