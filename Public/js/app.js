@@ -51,16 +51,16 @@ class UniversalCarousel {
   }
 
   createDots() {
-    const oldDots = this.carousel.querySelector('.carousel-dots');
+    let oldDots = this.carousel.querySelector('.carousel-dots');
     if (oldDots) oldDots.remove();
 
-    const dotsContainer = document.createElement('div');
+    let dotsContainer = document.createElement('div');
     dotsContainer.className = 'carousel-dots';
 
-    const totalDots = Math.ceil(this.slides.length / this.slidesToShow);
+    let totalDots = Math.ceil(this.slides.length / this.slidesToShow);
 
     for (let i = 0; i < totalDots; i++) {
-      const dot = document.createElement('button');
+      let dot = document.createElement('button');
       dot.className = 'carousel-dot';
       if (i === 0) dot.classList.add('active');
 
@@ -81,7 +81,7 @@ class UniversalCarousel {
   goToSlide(index) {
     this.currentIndex = index;
 
-    const slideWidth = 100 / this.slidesToShow;
+    let slideWidth = 100 / this.slidesToShow;
     this.track.style.transform = `translateX(-${this.currentIndex * slideWidth}%)`;
 
     this.updateDots();
@@ -89,7 +89,7 @@ class UniversalCarousel {
   }
 
   nextSlide() {
-    const totalDots = Math.ceil(this.slides.length / this.slidesToShow);
+    let totalDots = Math.ceil(this.slides.length / this.slidesToShow);
     this.currentIndex = (this.currentIndex + 1) % totalDots;
     this.goToSlide(this.currentIndex);
   }
