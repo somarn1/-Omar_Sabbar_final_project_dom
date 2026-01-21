@@ -264,7 +264,7 @@ header {
 
 .why-choose {
   width: 100%;
-  padding: 70px 0;
+  padding: 70px ;
 }
 
 .container {
@@ -504,7 +504,10 @@ h2 {
   color: #333;
 }
 
-/* Universal Carousel Styles */
+.carousel{
+  overflow: hidden;
+}
+
 .universal-carousel {
   position: relative;
   overflow: hidden;
@@ -560,7 +563,6 @@ h2 span {
   font-family: 'Amatic SC', cursive;
 }
 
-/* Testimonial Specific Styles */
 .testimonial-carousel {
   background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
   padding: 60px 20px;
@@ -626,7 +628,7 @@ h2 span {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Pricing Card Specific Styles */
+
 
 .pricing-slide {
   width: 34%;
@@ -870,6 +872,10 @@ h2 span {
 
 /* -----------------------__---------- */
 
+.book{
+  height: 90vh;
+}
+
 .containerBook {
   max-width: 1200px;
   margin: 0 auto;
@@ -1085,4 +1091,116 @@ textarea {
   right: 15px;
   font-size: 22px;
   cursor: pointer;
+}
+
+
+footer {
+  background-color: #2a2a2a;
+  color: #fff;
+}
+
+.containerFooter {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-section .icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dc3545;
+  font-size: 20px;
+}
+
+.footer-section p {
+  color: #ccc;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.footer-section a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section a:hover {
+  color: #dc3545;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.social-links a {
+  width: 45px;
+  height: 45px;
+  border: 2px solid #555;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
+  font-size: 18px;
+  transition: all 0.3s;
+}
+
+.social-links a:hover {
+  border-color: #dc3545;
+  color: #dc3545;
+  transform: translateY(-3px);
+}
+
+.footer-bottom {
+  background-color: #1f1f1f;
+  padding: 25px 0;
+  text-align: center;
+  border-top: 1px solid #3a3a3a;
+}
+
+.footer-bottom p {
+  color: #999;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.footer-bottom a {
+  color: #dc3545;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+
+
+@media (max-width: 992px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
 }
