@@ -497,30 +497,61 @@ h2 {
   font-size: 1.1em;
 }
 
+/* ----------------------------------------- */
 
+.demo-section {
+  max-width: 1400px;
+  margin: 0 auto 80px;
+}
 
-/* -------------------------- */
+.demo-title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 40px;
+  color: #333;
+}
 
-.carouselOne {
-  background-color: #88888851;
+/* Universal Carousel Styles */
+.universal-carousel {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.6s ease-in-out;
+}
+
+.carousel-slide {
+  flex-shrink: 0;
+  padding: 10px;
+}
+
+.carousel-dots {
   display: flex;
   justify-content: center;
-  align-items: center;
-
+  gap: 12px;
+  margin-top: 20px;
 }
 
-.testimonials-section {
-  max-width: 1200px;
-  width: 100%;
-  text-align: center;
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ccc;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.section-label {
-  font-size: 12px;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: #999;
-  margin-bottom: 20px;
+.carousel-dot.active {
+  background: #e74c3c;
+  transform: scale(1.2);
+}
+
+.carousel-dot:hover {
+  background: #e74c3c;
 }
 
 .section-title {
@@ -531,39 +562,36 @@ h2 {
   color: black;
 }
 
-.section-title .highlight {
-  color: #e74c3c;
-  font-style: italic;
+h2 span {
+  color: #ce1212;
+  font-family: 'Amatic SC', cursive;
 }
 
-.carousel-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.carousel-wrapper {
-  display: flex;
-  transition: transform 0.6s ease-in-out;
+/* Testimonial Specific Styles */
+.testimonial-carousel {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+  padding: 60px 20px;
 }
 
 .testimonial-slide {
-  min-width: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 80px;
+  justify-content: center;
+  gap: 60px;
   padding: 40px;
 }
 
 .testimonial-content {
   flex: 1;
+  max-width: 600px;
   text-align: left;
-  padding-left: 40px;
+  padding-left: 30px;
   border-left: 4px solid #e74c3c;
 }
 
 .quote-icon {
-  font-size: 60px;
+  font-size: 50px;
   color: #e74c3c;
   line-height: 0;
   margin-bottom: 20px;
@@ -574,61 +602,120 @@ h2 {
   line-height: 1.8;
   color: #333;
   font-style: italic;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 .author-name {
   font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   margin-bottom: 5px;
-  color: #333;
 }
 
 .author-title {
   font-size: 12px;
   color: #999;
   text-transform: uppercase;
-  letter-spacing: 1px;
   margin-bottom: 15px;
 }
 
 .stars {
   color: #ffd700;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .testimonial-image {
-  width: 300px;
-  height: 300px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-.carousel-dots {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 40px;
+/* Pricing Card Specific Styles */
+
+.pricing-slide {
+  width: 34%;
 }
 
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #ccc;
-  border: none;
+.pricing-card {
+  position: relative;
+  height: 500px;
+  border-radius: 8px;
+  overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
-.dot.active {
-  background: #e74c3c;
-  transform: scale(1.2);
+.pricing-card:hover {
+  transform: scale(1.02);
 }
 
-.dot:hover {
+.pricing-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pricing-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 100%);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: white;
+}
+
+.pricing-title {
+  font-size: 24px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+.pricing-amount {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.pricing-underline {
+  width: 60px;
+  height: 3px;
   background: #e74c3c;
+  margin-bottom: 20px;
+}
+
+.pricing-description {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+@media (max-width: 1024px) {
+  .pricing-slide {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonial-slide {
+    flex-direction: column-reverse;
+    gap: 30px;
+  }
+
+  .pricing-slide {
+    width: 100%;
+  }
+
+  .pricing-card {
+    height: 400px;
+  }
 }

@@ -4,7 +4,7 @@ let items = document.querySelectorAll('.menu-item');
 function showItems(category) {
     items.forEach(item => {
         let text = item.querySelector('h3').innerText.toLowerCase();
-        if(category.toLowerCase() === 'Starters') {
+        if (category.toLowerCase() === 'Starters') {
             item.classList.add('show');
         } else if (text.includes(category.toLowerCase())) {
             item.classList.add('show');
@@ -28,59 +28,98 @@ showItems('starters');
 
 
 
-let wrapper = document.getElementById('carouselWrapper');
-        let dotsContainer = document.getElementById('carouselDots');
-        let slides = document.querySelectorAll('.testimonial-slide');
-        let totalSlides = slides.length;
-        let currentIndex = 0;
-        let autoPlayInterval;
+class UniversalCarousel {
+    constructor(element) {
+        this.carousel = element;
+        this.track = element.querySelector('.carousel-track');
+        this.slides = element.querySelectorAll('.carousel-slide');
+        this.slidesToShow = parseInt(element.dataset.bsSlides) || 1;
+        this.autoplaySpeed = parseInt(element.dataset.bsAutoplay) || 4000;
+        this.currentIndex = 0;
+        this.autoplayInterval = null;
 
-        // Create dots
-        for (let i = 0; i < totalSlides; i++) {
-            let dot = document.createElement('button');
-            dot.classList.add('dot');
+        this.init();
+    }
+
+    init() {
+        this.createDots();
+        this.updateSlidesToShow();
+        this.startAutoplay();
+        this.addEventListeners();
+    }
+
+    updateSlidesToShow() {
+        if (window.innerWidth <= 768) {
+            this.slidesToShow = 1;
+        } else if (window.innerWidth <= 1024 && this.slidesToShow > 2) {
+            this.slidesToShow = 2;
+        }
+    }
+
+    createDots() {
+        const dotsContainer = document.createElement('div');
+        dotsContainer.className = 'carousel-dots';
+
+        const totalDots = Math.ceil(this.slides.length / this.slidesToShow);
+
+        for (let i = 0; i < totalDots; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'carousel-dot';
             if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(i));
+            dot.addEventListener('click', () => this.goToSlide(i));
             dotsContainer.appendChild(dot);
         }
 
-        const dots = document.querySelectorAll('.dot');
+        this.carousel.appendChild(dotsContainer);
+        this.dots = dotsContainer.querySelectorAll('.carousel-dot');
+    }
 
-        function updateDots() {
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentIndex);
-            });
-        }
+    updateDots() {
+        this.dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentIndex);
+        });
+    }
 
-        function goToSlide(index) {
-            currentIndex = index;
-            wrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
-            updateDots();
-            resetAutoPlay();
-        }
+    goToSlide(index) {
+        this.currentIndex = index;
+        const slideWidth = 100 / this.slidesToShow;
+        this.track.style.transform = `translateX(-${this.currentIndex * slideWidth}%)`;
+        this.updateDots();
+        this.resetAutoplay();
+    }
 
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            goToSlide(currentIndex);
-        }
+    nextSlide() {
+        const totalDots = Math.ceil(this.slides.length / this.slidesToShow);
+        this.currentIndex = (this.currentIndex + 1) % totalDots;
+        this.goToSlide(this.currentIndex);
+    }
 
-        function startAutoPlay() {
-            autoPlayInterval = setInterval(nextSlide, 4000);
-        }
+    startAutoplay() {
+        this.autoplayInterval = setInterval(() => this.nextSlide(), this.autoplaySpeed);
+    }
 
-        function resetAutoPlay() {
-            clearInterval(autoPlayInterval);
-            startAutoPlay();
-        }
+    resetAutoplay() {
+        clearInterval(this.autoplayInterval);
+        this.startAutoplay();
+    }
 
-        // Start auto-play
-        startAutoPlay();
-
-        // Pause on hover
-        wrapper.addEventListener('mouseenter', () => {
-            clearInterval(autoPlayInterval);
+    addEventListeners() {
+        this.carousel.addEventListener('mouseenter', () => {
+            clearInterval(this.autoplayInterval);
         });
 
-        wrapper.addEventListener('mouseleave', () => {
-            startAutoPlay();
+        this.carousel.addEventListener('mouseleave', () => {
+            this.startAutoplay();
         });
+
+        window.addEventListener('resize', () => {
+            this.updateSlidesToShow();
+        });
+    }
+}
+
+// Initialize all carousels on page
+document.addEventListener('DOMContentLoaded', () => {
+    const carousels = document.querySelectorAll('.universal-carousel');
+    carousels.forEach(carousel => new UniversalCarousel(carousel));
+});
