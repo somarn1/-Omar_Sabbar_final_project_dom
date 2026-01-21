@@ -120,6 +120,30 @@ class UniversalCarousel {
 
 // Initialize all carousels on page
 document.addEventListener('DOMContentLoaded', () => {
-    const carousels = document.querySelectorAll('.universal-carousel');
+    let carousels = document.querySelectorAll('.universal-carousel');
     carousels.forEach(carousel => new UniversalCarousel(carousel));
 });
+
+
+
+// --------------------------
+
+let openBtn = document.getElementById("openModal");
+let modal = document.getElementById("bookingModal");
+let closeBtn = document.getElementById("closeModal");
+
+openBtn.addEventListener("click", () => {
+    modal.style.display = "flex";
+});
+
+closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+});
+
+window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
+
+
